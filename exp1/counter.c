@@ -9,6 +9,8 @@
 #include <errno.h>
 #include <pthread.h>
 
+#include <stdbool.h>
+
 #define ONE_BILLION 1000000000L;
 
 long long the_counter = 0;
@@ -21,6 +23,22 @@ int c_and_sFlag = 0;
 
 pthread_mutex_t mutex;
 // todo: define a spinlock variable 
+int lock = 0;
+
+// define lock and unlock for spinlock
+void spinlock_lock()
+{
+    int test;
+    while(__atomic_compare_exchange_n(&lock, &test, 1, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST) == 0)
+    {
+        test = 0;
+    }
+}
+
+void spinlock_unlock()
+{
+    __atomic_store_n(&lock, 0, __ATOMIC_SEQ_CST);
+}
 
 char const * getTestName() {
     if(mutexFlag)
@@ -57,17 +75,31 @@ void add_iterate(int val, int iterations) {
         }
         else if(spinLockFlag) {
             // todo: lock the spinlock
+            spinlock_lock();
+
             add(&the_counter, val);
+            
             // todo: unlock the spinlock
+            spinlock_unlock();
         }
         else if(c_and_sFlag) {
             long long oldVal, newVal;
-			
+			bool CAS = false;
+
 			/* todo: change the following, so that it updates @the_counter atomically using CAS */
-			oldVal = the_counter;
+			/* 
+            oldVal = the_counter;
 			newVal = oldVal + val;
 			the_counter = newVal; 
-			/* --- */
+			*/
+            /* --- */
+
+            while(CAS == false)
+            {
+                oldVal = the_counter;
+                newVal = oldVal + val;
+                CAS = __atomic_compare_exchange_n(&the_counter, &oldVal, newVal, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+            }
         }
         else
             add(&the_counter, val);
