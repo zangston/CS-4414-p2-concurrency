@@ -26,7 +26,8 @@ from bokeh.plotting import figure, show, output_file
 from bokeh.io import export_png
 from bokeh.layouts import row, column
 
-MAX_CORE = 9 # will not plot any data above this core count
+# MAX_CORE = 9 # will not plot any data above this core count
+MAX_CORE = 21
 
 # return: a list of dicts
 def parse_trace(f):
