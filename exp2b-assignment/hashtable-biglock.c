@@ -168,9 +168,10 @@ void *thread_func(void *thread_id)
 		*/
 
 		assert(id >= 0);
-		pthread_mutex_lock(&mutexes[0]);
-		g_hash_table_insert(hashtables[find_which_hashtable(keys[i])], &keys[i], &vals[i]);
-		pthread_mutex_unlock(&mutexes[0]);
+		int x = find_which_hashtable(keys[i]);
+		pthread_mutex_lock(&mutexes[x]);
+		g_hash_table_insert(hashtables[x], &keys[i], &vals[i]);
+		pthread_mutex_unlock(&mutexes[x]);
 	}
 	vtune_task_end();
 

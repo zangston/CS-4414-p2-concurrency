@@ -1,0 +1,11 @@
+./hashtable-biglock output/hashtable-mono.txt
+test=hashtable threadNum=1 iterations=1000000 numList=1 numOperation=1000000 runTime(ms)=229 tput(Mops)=4.37
+test=hashtable threadNum=2 iterations=1000000 numList=2 numOperation=2000000 runTime(ms)=1421 tput(Mops)=1.41
+test=hashtable threadNum=4 iterations=1000000 numList=4 numOperation=4000000 runTime(ms)=2472 tput(Mops)=1.62
+test=hashtable threadNum=6 iterations=1000000 numList=6 numOperation=6000000 runTime(ms)=3344 tput(Mops)=1.79
+test=hashtable threadNum=8 iterations=1000000 numList=8 numOperation=8000000 runTime(ms)=4279 tput(Mops)=1.87
+test=hashtable threadNum=10 iterations=1000000 numList=10 numOperation=10000000 runTime(ms)=4640 tput(Mops)=2.16
+test=hashtable threadNum=12 iterations=1000000 numList=12 numOperation=12000000 runTime(ms)=4693 tput(Mops)=2.56
+test=hashtable threadNum=16 iterations=1000000 numList=16 numOperation=16000000 runTime(ms)=6059 tput(Mops)=2.64
+test=hashtable threadNum=20 iterations=1000000 numList=20 numOperation=20000000 runTime(ms)=7406 tput(Mops)=2.70
+All tests done
