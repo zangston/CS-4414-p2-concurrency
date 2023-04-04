@@ -121,8 +121,13 @@ int *alloc_vals(int numElements)
 int find_which_hashtable(int key)
 {
 	/* TODO: overwrite everything here to define your own H(K) */
+	
 	key = key; 	
 	return 0; 
+	
+
+	// Attempt 1: simple modulo
+	// return key % numHashTables;
 }
 
 GHashTable **alloc_hashtables(int n_hashtables)

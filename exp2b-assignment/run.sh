@@ -10,8 +10,8 @@
 # VTUNE="vtune -collect uarch-exploration"
 
 # NOTE: Switch among the following three to change # of iterations
-ITER=10k  # small
-#ITER=1M # med
+# ITER=10k  # small
+ITER=1M # med
 # ITER=10M # large
 
 run() {
@@ -25,9 +25,9 @@ run() {
   echo $1 $2
   
   # NOTE: Set thread counts to test 
-  # for tr in 1 2 4 6 8 10 12 16 20
+  for tr in 1 2 4 6 8 10 12 16 20
   # for tr in 1 2 4 6 8
-  for tr in 1 2
+  # for tr in 1 2
   do 
     $VTUNE $PROG --iterations=$ITER  --threads=$tr --parts=$tr $NUMHASHTABLE >> $TRACEFILE 2>&1   
   done
