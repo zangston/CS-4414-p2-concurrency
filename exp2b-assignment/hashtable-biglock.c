@@ -121,8 +121,13 @@ int *alloc_vals(int numElements)
 int find_which_hashtable(int key)
 {
 	/* TODO: overwrite everything here to define your own H(K) */
+	/*
 	key = key; 	
 	return 0; 
+	*/
+
+	// Attempt 1: simple modulo
+	return key % numHashTables;
 }
 
 GHashTable **alloc_hashtables(int n_hashtables)
@@ -155,10 +160,18 @@ void *thread_func(void *thread_id)
 		// The current code only uses a single hash table and a lock.
 		// TODO: to scale it up, rewrite/modify the code so it selects a hash table to insert into 
 		// 	and insert the data
+		/*
 		assert(id >= 0);
 		pthread_mutex_lock(&mutexes[0]);
 		g_hash_table_insert(hashtables[0], &keys[i], &vals[i]);
 		pthread_mutex_unlock(&mutexes[0]);
+		*/
+
+		assert(id >= 0);
+		int x = find_which_hashtable(keys[i]);
+		pthread_mutex_lock(&mutexes[x]);
+		g_hash_table_insert(hashtables[x], &keys[i], &vals[i]);
+		pthread_mutex_unlock(&mutexes[x]);
 	}
 	vtune_task_end();
 
@@ -179,7 +192,8 @@ int main(int argc, char **argv)
 
 	// The current code only uses 1 hashtable & 1 lock. 
 	// TODO: ensure N hashtables and N locks are allocated & used
-	numHashTables = 1;
+	// numHashTables = 1;
+	numHashTables = numThreads;
 
 	printf("thread count: %d\niters: %d\nhash tables: %d\n", numThreads, iterations, numHashTables);
 
