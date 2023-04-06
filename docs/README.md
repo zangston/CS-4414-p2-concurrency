@@ -1,5 +1,7 @@
 # Concurrency
 
+Second project of four associated with CS 4414 (Operating Systems), taught by Felix Lin in Spring 2023. This repository was made public after the final assignment for p2 had passed its deadline. If you are Felix Lin and you would like me to keep this repository private, please email me at wyz5rge@virginia.edu and I will do so immediately.
+
 ```
 git clone https://github.com/fxlin/p2-concurrency
 ```
